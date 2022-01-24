@@ -1,0 +1,30 @@
+SUMMARY OF DATASETS
+
+================================================================================
+
+Netflix_Prize_1_Ratings
+https://www.kaggle.com/netflix-inc/netflix-prize-data
+
+Anonymised ratings of 4499 movies from 17,770 users.
+1-5 rating system.
+24,053,764 lines
+
+
+================================================================================
+
+Amazon_Music_Ratings
+http://jmcauley.ucsd.edu/data/amazon/
+
+Anonymised ratings of x songs from y users.
+1-5 rating system.
+836,006 lines
+
+
+================================================================================
+
+Restaurant_Rec_Ratings (CC eq)
+https://www.kaggle.com/uciml/restaurant-data-with-consumer-ratings
+
+Anonymised ratings of 130 restaurants from 138 users.
+1-3 rating system.
+1,161 lines
