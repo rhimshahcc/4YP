@@ -1,22 +1,24 @@
-% A function to take a datset ('D') and randomly produce two further datasets: a
-% training set and a test set, based on a given fraction ('frac').
+% A function to take transform the original list of user ratings into a ratings matrix.
 
-function [train_D,test_D] = random_split(dataset,frac)
+function [ratings_matrix] = make_ratings_matrix(input_dataset)
 
-% Calculate the dimensions of the dataset, rows => no. of rows
-[rows,~] = size(dataset);
+% turn the 1st column of the dataset into a column vector
+c1 = input_dataset(:,1);
 
-% Randomly allocate integers to each row and randomly select them
-k = randperm(rows);
+% turn the 2nd column of the dataset into a column vector
+c2 = input_dataset(:,2);
 
-% Number of random rows required for the training dataset
-p = frac*rows;
+% turn the 3rd column of the dataset into a column vector
+%c3 = input_dataset(:,3) * 2; % Movie_Lens_Ratings
+c3 = (input_dataset(:,3) ./ 10) + 1; % Yahoo_Music_Ratings
+%c3 = input_dataset(:,3) + 1; % Restaurant_Rec_Ratings
 
-% Output training dataset
-train_D = dataset(k(1:p),:);
+UserID = categorical(c1); % take the 1st column from the matrix, D(1,~)
+ItemID = categorical(c2);
 
-% Output test dataset
-test_D = dataset(k(p+1:end),:);
+%Formulation of the user vs item ratings matrix
+ratings_matrix = crosstab(UserID,ItemID);
+ratings_matrix(ratings_matrix==1) = c3;
 
 end
 

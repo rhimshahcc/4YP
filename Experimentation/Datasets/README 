@@ -2,22 +2,26 @@ SUMMARY OF DATASETS
 
 ================================================================================
 
-Netflix_Prize_1_Ratings
-https://www.kaggle.com/netflix-inc/netflix-prize-data
+Movie_Lens_Ratings
+https://grouplens.org/datasets/movielens/25m/
 
-Anonymised ratings of 850 movies from 17,770 users.
-1-5 rating system.
-4,370,125 lines
+Anonymised ratings of 32,890 movies from 22,070 users.
+UserID,ItemID,Rating,timestamp
+1-10 (currently 0.5-5.0).
+3,332,139 lines
+Sparsity is 0.4590%
 
 
 ================================================================================
 
-Amazon_Music_Ratings
-http://jmcauley.ucsd.edu/data/amazon/
+Yahoo_Music_Ratings
+https://webscope.sandbox.yahoo.com/catalog.php?datatype=r
 
-Anonymised ratings of x songs from y users.
-1-5 rating system.
-836,006 lines
+Anonymised ratings of 13,164 songs from 12,730 users.
+UserID,ItemID,Rating
+1-11 rating system (currently 0-100 in multiples of 10).
+757,752 lines
+Sparsity is 0.4522%
 
 
 ================================================================================
@@ -26,5 +30,9 @@ Restaurant_Rec_Ratings (CC eq)
 https://www.kaggle.com/uciml/restaurant-data-with-consumer-ratings
 
 Anonymised ratings of 130 restaurants from 138 users.
-1-3 rating system.
+1-3 rating system (currently 0-2).
+UserID,ItemID,Rating
 1,161 lines
+Sparsity is 6.4716%
+
+

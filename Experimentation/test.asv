@@ -1,0 +1,31 @@
+% Clear all previously defined variables
+clear all
+
+% Datasets:
+% Restaurant_Rec_ratings.txt
+% Yahoo_Music_Ratings.txt
+% Movie_Lens_Ratings.txt
+
+% Form the data matrix
+D = readmatrix('Datasets/Restaurant_Rec_ratings.txt');
+
+ratings_matrix = make_ratings_matrix(D);
+rows = size(ratings_matrix,1);
+col = size(ratings_matrix,2);
+empty_cells = sum(ratings_matrix(:) == 0);
+
+sparsity = 100 - ((empty_cells ./ (rows * col)) * 100);
+long_tail = sum(ratings_matrix~=0);
+long_tail = sort(long_tail,'descend');
+long_tail = transpose(long_tail);
+n = size(long_tail,1);
+long_tail_col = transpose([0:1:n]);
+long_tail = [long_tail long_tail_col]
+
+
+% D = normalize(D)
+% D = make_ratings_matrix(D)
+
+% Prevents orange errors (due to the frac ratio not creating integer 
+% datasets) from appearing in the workspace
+warning off
