@@ -3,15 +3,16 @@ clear all
 
 % Datasets:
 
-% Restaurant_Rec_ratings.txt
-% Yahoo_Music_Ratings.txt
-% Movie_Lens_Ratings.txt
+% Restaurant_Rec_ratings.txt = 1
+% Yahoo_Music_Ratings.txt = 2
+% Movie_Lens_Ratings.txt = 3
 
 % Form the data matrix
 D = readmatrix('Datasets/Yahoo_Music_Ratings.txt');
+dataset_type = 2;
 
 % Form the ratings matrix
-ratings_matrix = make_ratings_matrix(D);
+ratings_matrix = make_ratings_matrix(D, dataset_type);
 
 % Calculate the sparsity of the ratings matrix
 sparsity = calc_sparsity(ratings_matrix)
@@ -21,7 +22,6 @@ sparsity = calc_sparsity(ratings_matrix)
 plot_long_tail(ratings_matrix)
 
 
-% D = normalize(D)
 
 % Prevents orange errors from appearing in the workspace
 warning off
