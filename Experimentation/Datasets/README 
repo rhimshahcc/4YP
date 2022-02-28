@@ -2,6 +2,7 @@ SUMMARY OF DATASETS
 
 ================================================================================
 
+'Movie Lens Dataset'
 Movie_Lens_Ratings
 https://grouplens.org/datasets/movielens/25m/
 
@@ -14,6 +15,7 @@ Sparsity is 0.4590%
 
 ================================================================================
 
+'Yahoo Music Dataset'
 Yahoo_Music_Ratings
 https://webscope.sandbox.yahoo.com/catalog.php?datatype=r
 
@@ -26,6 +28,7 @@ Sparsity is 0.4522%
 
 ================================================================================
 
+'Restaurant Rec Dataset'
 Restaurant_Rec_Ratings (CC eq)
 https://www.kaggle.com/uciml/restaurant-data-with-consumer-ratings
 
