@@ -1,0 +1,20 @@
+
+function user_based_sim(row_pos,col_pos,D_training);
+
+for n = 1:size(D_training,1); % number of rows
+    
+    if D_training(n,
+        
+    end
+    
+end
+
+
+
+
+
+end
+
+
+
+
