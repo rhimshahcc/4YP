@@ -1,3 +1,5 @@
+% A function to predict the nonzero values in D_test using the K-NN method
+% and then measure the error (RMSE).
 
 function rmse_nn = nearest_neighbour(D_training,D_test)
 
@@ -32,8 +34,7 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     
 end
 
-%RMSE: 
-%pred_test vs. D_test
-%rmse_nn
+% RMSE
+rmse_nn = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test) ) )  
 
 end 

@@ -16,7 +16,7 @@ size(D);
 ratings_matrix = make_ratings_matrix(D, txt_file);
 
 % Cross Validation
-split = 10;
+split = 4;
 D_split = cross_validation_nn(ratings_matrix,split);
 
 % Check how many values have changed after cross-validation
