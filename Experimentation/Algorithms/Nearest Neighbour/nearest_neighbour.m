@@ -19,10 +19,10 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     item_corr_matrix = item_based_sim(row_pos,col_pos,D_training);
     
     % Predict the target entry, using the most similar rows
-    user_pred_entry = user_pred_entry(user_corr_matrix);
+    user_pred_entry = user_pred_entry(user_corr_matrix,col_pos);
     
     % Predict the target entry, using the most similar col
-    item_pred_entry = item_pred_entry(item_corr_matrix);
+    item_pred_entry = item_pred_entry(item_corr_matrix,row_pos);
     
     % Average item & user predictions to remove bias  
     pred_entry = (user_pred_entry + item_pred_entry)./2;
