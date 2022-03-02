@@ -25,10 +25,27 @@ for n_row = 1:size(D_training,1) % iterate through all the rows
             
         end
         
-        corr_row = corrcoef(rows_matrix); % calculate the pearson correlation on rows_matrix, between the paired nonzero entries
-        corr_row = corr_row(1,2); % select the correlation between A,B 
+        corr_row = corrcoef(rows_matrix); % calculate the pearson correlation on rows_matrix, between the paired nonzero rows
+        nan_elements = isnan(corr_row); % check for any nan elements
         
-        user_corr_matrix = [ user_corr_matrix ; n_row corr_row ]; % assign to a matrix that contains the row number and the correletion
+        % Select the correlation between A,B 
+        if (size(corr_row,1) == 1) && (nnz(nan_elements) == 0)
+            
+            corr_row_A_B = corr_row(1,1);
+            user_corr_matrix = [ user_corr_matrix ; n_row corr_row_A_B ]; % assign to a matrix that contains the row number and the correletion
+            
+        elseif (size(corr_row,1) == 2) && (nnz(nan_elements) == 0)
+            
+            corr_row_A_B = corr_row(1,2);
+            user_corr_matrix = [ user_corr_matrix ; n_row corr_row_A_B ]; % assign to a matrix that contains the row number and the correletion
+            
+        else 
+            
+            % ...else... the row being analysed can not be used for the nearest
+            % neighbour, and is therefore not added to the
+            % user_corr_matrix, however other rows can be used
+            
+        end 
         
     end
     
