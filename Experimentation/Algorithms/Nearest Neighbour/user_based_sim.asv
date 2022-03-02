@@ -1,15 +1,35 @@
 
-function user_based_sim(row_pos,col_pos,D_training);
+function user_based_sim(row_pos,col_pos,D_training)
 
-for n = 1:size(D_training,1); % number of rows
+corr_matrix = [];
+
+for n_row = 1:size(D_training,1) % iterate through all the rows
     
-    if D_training(n,
+    if D_training(n_row,col_pos) ~= 0 % select rows which have rated the entry
+          
+        rows_matrix = []; % initialising a matrix to store all the nonzero values from the 2 rows being compared 
+        
+        for n_entry_comp = 1:size(D_training,2) % iterate through the entries in the 2 rows being compared
+            
+            if D_training(n_row,n_entry_comp) && D_training(row_pos,n_entry_comp) % check if both entries are nonzero
+                
+                nn_entry = D_training(n_row,n_entry_comp); % the nearest neighbour entry 
+                comp_entry = D_training(row_pos,n_entry_comp); % the entry being analysed
+                
+                rows_matrix = [ rows_matrix ; nn_entry comp_entry]; % assign to a matrix
+            
+            end
+            
+        end
+        
+        corr_row = corrcoef(rows_matrix) % calculate the pearson correlation on rows_matrix
+        corr_row = corr_row(1,2) % select the correlation between A,B 
+        
+        corr_matrix = [ corr_matrix ; corr_row n_row ] % assign to a matrix
         
     end
     
 end
-
-
 
 
 
