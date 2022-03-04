@@ -8,9 +8,13 @@ addpath('../../Generic Functions')
 % Movie_Lens_Ratings.txt
 
 % Form the data matrix
-txt_file = '../../Datasets/Restaurant_Rec_ratings.txt';
+txt_file = '../../Datasets/Yahoo_Music_Ratings.txt';
 D = readmatrix(txt_file);
 ratings_matrix = make_ratings_matrix(D, txt_file); % Form the ratings matrix
+
+% Form a smaller test matrix
+test_matrix = make_test_matrix(ratings_matrix,3000,3000);
+ratings_matrix = test_matrix;
 
 % Inputs
 split = 4; % number of cross-validation folds

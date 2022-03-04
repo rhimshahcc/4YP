@@ -13,6 +13,8 @@ item_false_entries = 0; % initialise the item-based false entries counter
 
 for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     
+    completion = n./nnz(D_test) * 100
+
     % The nonzero value's position in the matrix
     row_pos = nonzero_D_test(n,1);
     col_pos = nonzero_D_test(n,2);
@@ -32,8 +34,8 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     [item_pred_entry,item_false_entries] = item_pred(top_k_item_corr_matrix,row_pos,D_training,item_false_entries);
     
     % Average item & user predictions to remove bias  
-    pred_entry = (user_pred_entry + item_pred_entry)./2
-    acc_entry = D_test(row_pos,col_pos)
+    pred_entry = (user_pred_entry + item_pred_entry)./2;
+    acc_entry = D_test(row_pos,col_pos);
     
     % Add the value to a blank matrix: pred_test, if it is a real number
     is_nan = isnan(pred_entry);
