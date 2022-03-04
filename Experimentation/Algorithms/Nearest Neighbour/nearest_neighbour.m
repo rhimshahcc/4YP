@@ -1,7 +1,7 @@
 % A function to predict the nonzero values in D_test using the K-NN method
 % and then measure the error (RMSE).
 
-function rmse_nn = nearest_neighbour(D_training,D_test)
+function rmse_nn = nearest_neighbour(D_training,D_test,k)
 
 [i,j,v] = find(D_test);
 nonzero_D_test = [i j v];
@@ -24,12 +24,12 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     item_corr_matrix = item_based_sim(row_pos,col_pos,D_training);
     
     % Predict the target entry, using the most similar rows
-    % select the top-k similar rows
-    [user_pred_entry,user_false_entries] = user_pred(user_corr_matrix,col_pos,D_training,user_false_entries);
+    top_k_user_corr_matrix = select_top_k(user_corr_matrix,k); % select the top-k similar rows
+    [user_pred_entry,user_false_entries] = user_pred(top_k_user_corr_matrix,col_pos,D_training,user_false_entries);
         
     % Predict the target entry, using the most similar col
-    % select the top-k similar col
-    [item_pred_entry,item_false_entries] = item_pred(item_corr_matrix,row_pos,D_training,item_false_entries);
+    top_k_item_corr_matrix = select_top_k(item_corr_matrix,k); % select the top-k similar col
+    [item_pred_entry,item_false_entries] = item_pred(top_k_item_corr_matrix,row_pos,D_training,item_false_entries);
     
     % Average item & user predictions to remove bias  
     pred_entry = (user_pred_entry + item_pred_entry)./2

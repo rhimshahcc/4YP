@@ -1,6 +1,6 @@
 % Clear all previously defined variables
 clear all
-addpath('../Generic Functions') 
+addpath('../../Generic Functions') 
 
 % Datasets:
 % Restaurant_Rec_ratings.txt
@@ -8,19 +8,17 @@ addpath('../Generic Functions')
 % Movie_Lens_Ratings.txt
 
 % Form the data matrix
-txt_file = '../../Datasets/Restaurant_Rec_ratings.txt';
+txt_file = '../../Datasets/Yahoo_Music_Ratings.txt';
 D = readmatrix(txt_file);
-size(D);
+ratings_matrix = make_ratings_matrix(D, txt_file); % Form the ratings matrix
 
-% Form the ratings matrix
-ratings_matrix = make_ratings_matrix(D, txt_file);
+% Inputs
+split = 4; % number of cross-validation folds
+k = 30; % Select the top k% similar rows/col
 
 % Cross Validation
-split = 4;
 D_split = cross_validation_nn(ratings_matrix,split);
-
-% Check how many values have changed after cross-validation
-error = cross_val_error(ratings_matrix,D_split,split);
+error = cross_val_error(ratings_matrix,D_split,split); % Check how many values have changed after cross-validation
 
 % for n = 1:split
 
@@ -28,7 +26,7 @@ error = cross_val_error(ratings_matrix,D_split,split);
 [D_training,D_test] = form_train_test(D_split,split);
 
 % Carry our nearest neighbour
-rmse_nn = nearest_neighbour(D_training,D_test)
+rmse_nn = nearest_neighbour(D_training,D_test,k)
 
 % Store each value in a vector
 %rmse_nn_values = rmse_nn_values[:,rmse_nn]
