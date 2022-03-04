@@ -8,7 +8,7 @@ addpath('../../Generic Functions')
 % Movie_Lens_Ratings.txt
 
 % Form the data matrix
-txt_file = '../../Datasets/Yahoo_Music_Ratings.txt';
+txt_file = '../../Datasets/Restaurant_Rec_ratings.txt';
 D = readmatrix(txt_file);
 ratings_matrix = make_ratings_matrix(D, txt_file); % Form the ratings matrix
 
