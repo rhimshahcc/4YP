@@ -1,7 +1,7 @@
 % A function to predict the nonzero values in D_test using the naive bayes method
 % and then measure the error (RMSE).
 
-function rmse_nb = naive_bayes(D_training,D_test,k)
+function rmse_nb = naive_bayes(D_training,D_test)
 
 [i,j,v] = find(D_test);
 nonzero_D_test = [i j v]; % matrix containing all the nonzero values and their position
@@ -19,28 +19,30 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     row_pos = nonzero_D_test(n,1);
     col_pos = nonzero_D_test(n,2);
     
-    item_vect_pred = []; % holds the 
-    user_vect_pred = []; % holds the 
+    item_vect_prob = []; % holds the probabilities for an entry, item-based
+    user_vect_prob = []; % holds the probabilities for an entry, user-based
     
-    % function to get all the possible rating values from the dataset
+    poss_ratings = unique(D_training); % find all the unique values in 
     
     % item-based
-    for n_item_pred = % iterate through the possible rating values values
+    for n_item_val = poss_ratings(1,2):poss_ratings(1,end) % iterate through the possible rating values values
         
-        % first part of the prob equation
+        % first part of the prob equation, the prior 
+        item_prior = calc_item_prior(col_pos,D_training,n_item_val);
         
-        % second part of the prob equation
+        % second part of the prob equation, the likelihood
+        item_likelihood = calc_item_likelihood(col_pos,D_training,n_item_val);
         
         % multiply the first and second part together 
-        nb_item_value;
+        nb_item_prob = item_prior .* item_likelihood;
         
-        % grow item_vect_pred by each value
-        item_vect_pred = [ item_vect_pred ; nb_item_value];
+        % grow item_vect_prob by each value
+        item_vect_prob = [ item_vect_prob ; n_item_val nb_item_prob];
         
     end
     
     % user-based
-    for n_user_pred = % iterate through the possible rating values values
+    for n_user_val = % iterate through the possible rating values values
         
         % first part of the prob equation
         
@@ -49,7 +51,7 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
         % multiply the first and second part together 
         
         % grow user_vect_pred by each value
-        user_vect_pred = [ user_vect_pred ; nb_user_value];
+        user_vect_prob = [ user_vect_prob ; n_user_val nb_user_value];
         
     end
     

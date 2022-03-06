@@ -12,19 +12,10 @@ UserID,ItemID,Rating,timestamp
 3,332,139 lines
 Sparsity is 0.4590%
 
-
-================================================================================
-
-'Yahoo Music Dataset'
-Yahoo_Music_Ratings
-https://webscope.sandbox.yahoo.com/catalog.php?datatype=r
-
-Anonymised ratings of 13,164 songs from 12,730 users.
-UserID,ItemID,Rating
-1-11 rating system (currently 0-100 in multiples of 10).
-757,752 lines
-Sparsity is 0.4522%
-
+SUBSET:
+1200 x 1200 ratings matrix
+49175 ratings
+3.4149 sparsity
 
 ================================================================================
 
@@ -38,4 +29,14 @@ UserID,ItemID,Rating
 1,161 lines
 Sparsity is 6.4716%
 
+================================================================================
 
+'Yahoo Music Dataset' NOT BEING USED
+Yahoo_Music_Ratings
+https://webscope.sandbox.yahoo.com/catalog.php?datatype=r
+
+Anonymised ratings of 13,164 songs from 12,730 users.
+UserID,ItemID,Rating
+1-11 rating system (currently 0-100 in multiples of 10).
+757,752 lines
+Sparsity is 0.4522%

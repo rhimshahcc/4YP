@@ -14,7 +14,7 @@ if isequal(dataset_type,'../Datasets/Movie_Lens_Ratings.txt') || isequal(dataset
         c3 = input_dataset(:,3) * 2; % alter the movie_lens ratings
         
     elseif isequal(dataset_type,'../Datasets/Yahoo_Music_Ratings.txt') || isequal(dataset_type,'../../Datasets/Yahoo_Music_Ratings.txt')
-        c3 = (input_dataset(:,3) ./ 10) + 1; % alter the yahoo_music ratings
+        c3 = input_dataset(:,3) ./ 10 ; % alter the yahoo_music ratings
         
     elseif isequal(dataset_type,'../Datasets/Restaurant_Rec_ratings.txt') || isequal(dataset_type,'../../Datasets/Restaurant_Rec_ratings.txt')
         c3 = input_dataset(:,3) + 1; % alter the restaurant_rec ratings
