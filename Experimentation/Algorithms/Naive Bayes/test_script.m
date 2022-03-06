@@ -30,9 +30,7 @@ error = cross_val_error(ratings_matrix,D_split,split); % Check how many values h
 [D_training,D_test] = form_train_test(D_split,split);
 
 % Carry our nearest neighbour
-tic
-rmse_nn = nearest_neighbour(D_training,D_test,k)
-toc
+rmse_nb = naive_bayes(D_training,D_test,k)
 
 % Store each value in a vector
 %rmse_nn_values = rmse_nn_values[:,rmse_nn]
