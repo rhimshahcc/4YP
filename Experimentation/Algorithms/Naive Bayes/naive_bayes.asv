@@ -53,11 +53,11 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
         % grow user_vect_pred by each value
         user_vect_prob = [ user_vect_prob ; n_user_val nb_user_value];
         
-    %end
+    end
     
     % find the maximum value from vect_pred, asssign to pred_entry
     item_pred_entry = max(item_vect_prob);
-    user_pred_entry = item_pred_entry; %max(user_vect_prob);
+    user_pred_entry = max(user_vect_prob);
     
     % Average item & user predictions to remove bias  
     pred_entry = (user_pred_entry + item_pred_entry)./2;
