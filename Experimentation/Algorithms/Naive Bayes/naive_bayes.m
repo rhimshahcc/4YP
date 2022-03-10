@@ -25,7 +25,7 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     poss_ratings = unique(D_training); % find all the unique ratings in the dataset 
     
     % item-based
-    for n_item_val = poss_ratings(1,2):poss_ratings(1,end) % iterate through the possible rating values 
+    for n_item_val = poss_ratings(1,1):poss_ratings(end,1) % iterate through the possible rating values 
         
         % first part of the prob equation, the prior 
         item_prior = calc_item_prior(col_pos,D_training,n_item_val);
@@ -51,7 +51,7 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
         % multiply the first and second part together 
         
         % grow user_vect_pred by each value
-        user_vect_prob = [ user_vect_prob ; n_user_val nb_user_value];
+        %user_vect_prob = [ user_vect_prob ; n_user_val nb_user_value];
         
     %end
     

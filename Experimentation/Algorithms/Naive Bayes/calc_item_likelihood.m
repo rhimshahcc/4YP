@@ -1,6 +1,6 @@
 % A function to calculate the liklihood probability (item-based)
 
-function item_liklihood = calc_item_liklihood(row_pos,col_pos,D_training,n_item_val)
+function item_likelihood = calc_item_likelihood(row_pos,col_pos,D_training,n_item_val)
 
 row = D_training(row_pos,:); % extract the entry's row
 col = D_training(:,col_pos); % extract the entry's col
@@ -29,11 +29,11 @@ for n_val = 1:size(nonzero_row,1) % iterate through all the rated (nonzero) valu
     [s,f,l] = find(col_n_val);  
     n_nonzero_val_col = [s f l]; % n_item_val_col = [row col value]
         
-    % calculate the numerator   
+    % calculate the numerator: find similar rows, then sum the generated array   
     comp_value_vector_num = ismember(n_rated_val_col(:,1),n_item_val_col(:,1));        
     cond_prob_val_num = sum(comp_value_vector_num);
     
-    % calculate the denominator
+    % calculate the denominator: find similar rows, then sum the generated array  
     comp_value_vector_den = ismember(n_nonzero_val_col(:,1),n_item_val_col(:,1));
     cond_prob_val_den = sum(comp_value_vector_den);
 
@@ -44,6 +44,6 @@ for n_val = 1:size(nonzero_row,1) % iterate through all the rated (nonzero) valu
 
 end
 
-item_liklihood = prod(cond_prob_values); % multiply all the probability values to get the liklihood
+item_likelihood = prod(cond_prob_values); % multiply all the probability values to get the liklihood
 
 end

@@ -29,29 +29,13 @@ for n_val = 1:size(nonzero_row,1) % iterate through all the rated (nonzero) valu
     [s,f,l] = find(col_n_val);  
     n_nonzero_val_col = [s f l]; % n_item_val_col = [row col value]
         
-    % calculate the numerator: count the number of times the same row number appears 
-    
-    if size(n_item_val_col,1) > size(n_rated_val_col,1)
-        
-        comp_value_vector_num = ismember(n_rated_val_col(:,1),n_item_val_col(:,1));
-            
-        cond_prob_val_num = sum(comp_value_vector_num);
-        
-    else
-        
-        comp_value_vector_num = ismember(n_item_val_col(:,1),n_nonzero_val_col(:,1));
-            
-        cond_prob_val_num = sum(comp_value_vector_num);
-        
-    end
+    % calculate the numerator:   
+    comp_value_vector_num = ismember(n_rated_val_col(:,1),n_item_val_col(:,1));        
+    cond_prob_val_num = sum(comp_value_vector_num);
     
     % calculate the denominator
-    
-    comp_value_vector_den = ismember(n_rated_val_col(:,1),n_item_val_col(:,1));
-    
+    comp_value_vector_den = ismember(n_nonzero_val_col(:,1),n_item_val_col(:,1));
     cond_prob_val_den = sum(comp_value_vector_den);
-    
-    
 
     % divide through 
     cond_prob_val = cond_prob_val_num ./ cond_prob_val_den; % divide the numerator by the denominator
