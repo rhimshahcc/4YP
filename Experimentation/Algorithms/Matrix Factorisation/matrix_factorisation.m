@@ -18,33 +18,26 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     % The nonzero value's position in the matrix
     row_pos = nonzero_D_test(n,1);
     col_pos = nonzero_D_test(n,2);
-
-    poss_ratings = unique(D_training); % find all the unique ratings in the dataset 
-    item_vect_prob = []; % holds the probabilities for an entry, item-based
     
-    % Preallocation method
-    %item_vect_prob = zeros(size(poss_ratings,1)-1,2);
+    item_vect_prob = []; % holds the probabilities for an entry, item-based
+    user_vect_prob = []; % holds the probabilities for an entry, user-based
+    
+    poss_ratings = unique(D_training); % find all the unique ratings in the dataset 
     
     % item-based
-    for n_item_val = 1:size(poss_ratings,1)-1 % iterate through the possible rating values 
-        
-        n_item_rating = poss_ratings(n_item_val+1,1); % extract the rating from poss_ratings
+    for n_item_val = poss_ratings(2,1):poss_ratings(end,1) % iterate through the possible rating values 
         
         % first part of the prob equation, the prior 
-        item_prior = calc_item_prior(col_pos,D_training,n_item_rating);
+        item_prior = calc_item_prior(col_pos,D_training,n_item_val);
         
         % second part of the prob equation, the likelihood
-        item_likelihood = calc_item_likelihood(row_pos,col_pos,D_training,n_item_rating,alpha);
+        item_likelihood = calc_item_likelihood(row_pos,col_pos,D_training,n_item_val,alpha);
         
         % multiply the first and second part together 
         nb_item_prob = item_prior .* item_likelihood;
         
         % grow item_vect_prob by each value
-        item_vect_prob = [ item_vect_prob ; n_item_rating nb_item_prob];
-        
-        % Preallocation method
-        %item_vect_prob(n_item_val,1) = n_item_rating;
-        %item_vect_prob(n_item_val,2) = nb_item_prob;
+        item_vect_prob = [ item_vect_prob ; n_item_val nb_item_prob];
         
     end
     

@@ -9,14 +9,14 @@ addpath('../../Generic Functions')
 % Yahoo_Music_Ratings.txt
 
 % Form the data matrix
-txt_file = '../../Datasets/Movie_Lens_Ratings.txt';
+txt_file = '../../Datasets/Restaurant_Rec_ratings.txt';
 D = readmatrix(txt_file);
 D = D(:,1:3);
 ratings_matrix = make_ratings_matrix(D, txt_file); % form the ratings matrix
 
 % Form a smaller test matrix
-test_matrix = make_test_matrix(ratings_matrix,1200,1200);
-ratings_matrix = test_matrix;
+%test_matrix = make_test_matrix(ratings_matrix,1200,1200);
+%ratings_matrix = test_matrix;
 
 % Inputs
 split = 4; % number of cross-validation folds
@@ -31,10 +31,8 @@ error = cross_val_error(ratings_matrix,D_split,split); % check how many values h
 % Form the training/test datasets from the cross validation folds
 [D_training,D_test] = form_train_test(D_split,split);
 
-% Carry out naive bayes
-tic
+% Carry our nearest neighbour
 rmse_nb = naive_bayes(D_training,D_test,alpha)
-toc
 
 % Store each value in a vector
 %rmse_nn_values = rmse_nn_values[:,rmse_nn]
