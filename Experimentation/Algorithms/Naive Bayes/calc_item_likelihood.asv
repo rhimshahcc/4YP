@@ -35,9 +35,10 @@ for n_val = 1:size(nonzero_row,1) % iterate through all the rated (nonzero) valu
     
     % calculate the denominator: find similar rows, then sum the generated array  
     comp_value_vector_den = ismember(n_nonzero_val_col(:,1),n_item_val_col(:,1));
-    n_alpha = size(comp_value_vector_den,1); % count the additive parameter multiple
+    n_alpha = size(comp_value_vector_den); % count the additive parameter multiple
     cond_prob_val_den = sum(comp_value_vector_den) + (n_alpha*alpha);
 
+    % divide through 
     cond_prob_val = cond_prob_val_num ./ cond_prob_val_den; % divide the numerator by the denominator
 
     cond_prob_values = [ cond_prob_values ; cond_prob_val ]; % add to a matrix of probability values

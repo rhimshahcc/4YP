@@ -1,7 +1,7 @@
 % A function to predict the nonzero values in D_test using the naive bayes method
 % and then measure the error (RMSE).
 
-function rmse_nb = naive_bayes(D_training,D_test)
+function rmse_nb = naive_bayes(D_training,D_test,alpha)
 
 [i,j,v] = find(D_test);
 nonzero_D_test = [i j v]; % matrix containing all the nonzero values and their position
@@ -25,13 +25,13 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     poss_ratings = unique(D_training); % find all the unique ratings in the dataset 
     
     % item-based
-    for n_item_val = poss_ratings(1,1):poss_ratings(end,1) % iterate through the possible rating values 
+    for n_item_val = poss_ratings(2,1):poss_ratings(end,1) % iterate through the possible rating values 
         
         % first part of the prob equation, the prior 
         item_prior = calc_item_prior(col_pos,D_training,n_item_val);
         
         % second part of the prob equation, the likelihood
-        item_likelihood = calc_item_likelihood(row_pos,col_pos,D_training,n_item_val);
+        item_likelihood = calc_item_likelihood(row_pos,col_pos,D_training,n_item_val,alpha);
         
         % multiply the first and second part together 
         nb_item_prob = item_prior .* item_likelihood;
@@ -41,27 +41,10 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
         
     end
     
-    % user-based
-    %for n_user_val = % iterate through the possible rating values values
-        
-        % first part of the prob equation
-        
-        % second part of the prob equation
-        
-        % multiply the first and second part together 
-        
-        % grow user_vect_pred by each value
-        %user_vect_prob = [ user_vect_prob ; n_user_val nb_user_value];
-        
-    %end
-    
-    % find the maximum value from vect_pred, asssign to pred_entry
-    item_pred_entry = max(item_vect_prob);
-    user_pred_entry = item_pred_entry; %max(user_vect_prob);
-    
-    % Average item & user predictions to remove bias  
-    pred_entry = (user_pred_entry + item_pred_entry)./2;
-    acc_entry = D_test(row_pos,col_pos);
+    % Find the maximum value from item_vect_pred, asssign to pred_entry
+    [~, r] = max(item_vect_prob(:,2));
+    pred_entry = item_vect_prob(r,1);
+    acc_entry = D_test(row_pos,col_pos); % check the actual entry for testing reasons
     
     % Add the value to a blank matrix: pred_test, if it is a real number
     is_nan = isnan(pred_entry);
