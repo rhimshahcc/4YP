@@ -26,13 +26,10 @@ while size(s_D_training) > 0
         
         for q = 1:rank_k
             
-            u_entry = U(i,j);
-            v_entry = V(i,j);
-            
-            u_next_entry = calc_next_u(u_entry,i,q,E,V,step);
+            u_next_entry = calc_next_u(i,q,E,V,step);
             U_next(i,q) = u_next_entry;
             
-            v_next_entry = calc_next_v(v_entry,j,q,E,U,step);
+            v_next_entry = calc_next_v(j,q,E,U,step);
             V_next(j,q) = v_next_entry;
             
         end
@@ -44,10 +41,9 @@ while size(s_D_training) > 0
     E = D_training - (U*V.'); % new errr
     
     % Update s_D_training to contain only errors that do not meet the convergence criterion
-    [f,p] = find(E<converge_crit); % find values in E that are < converge_crit
-    
-    t = diag(E(f,p)); % vector of errors that are still less than
-    s_D_training = [f p t]; % update s_D_training
+    [f,p] = find(E<converge_crit);
+    t = E(f,p); % vector of errors that are still less than
+    s_D_training = [f p t]
     
 end
 

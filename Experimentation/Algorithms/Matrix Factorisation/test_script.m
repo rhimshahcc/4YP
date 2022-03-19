@@ -20,7 +20,9 @@ ratings_matrix = make_ratings_matrix(D, txt_file); % form the ratings matrix
 
 % Inputs
 split = 4; % number of cross-validation folds
-alpha = 0.01; % additive smoothing parameter 
+step = 0.01; % gradient descent step value 
+noise_factor = 0.1; % how much noise is there in the LFM
+converge_crit = 0.001; % convergence criterion for gradient descent
 
 % Cross Validation
 D_split = cross_validation_nn(ratings_matrix,split);
@@ -32,7 +34,7 @@ error = cross_val_error(ratings_matrix,D_split,split); % check how many values h
 [D_training,D_test] = form_train_test(D_split,split);
 
 % Carry our nearest neighbour
-rmse_nb = naive_bayes(D_training,D_test,alpha)
+rmse_mf = matrix_factorisation(D_training,D_test,step,noise_factor,converge_crit)
 
 % Store each value in a vector
 %rmse_nn_values = rmse_nn_values[:,rmse_nn]
