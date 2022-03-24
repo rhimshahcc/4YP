@@ -22,7 +22,7 @@ ratings_matrix = make_ratings_matrix(D, txt_file); % form the ratings matrix
 split = 4; % number of cross-validation folds
 step = 0.01; % gradient descent step value 
 noise_factor = 0.1; % how much noise is there in the LFM
-converge_crit = 0.001; % convergence criterion for gradient descent
+converge_crit = 0.1; % convergence criterion for gradient descent
 
 % Cross Validation
 D_split = cross_validation_nn(ratings_matrix,split);
