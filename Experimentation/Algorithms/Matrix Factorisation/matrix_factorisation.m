@@ -5,13 +5,15 @@ function rmse_mf = matrix_factorisation(D_training,D_test,step,noise_factor,conv
 
 [i,j,v] = find(D_training);
 s_D_training = [i j v]; % matrix containing all the nonzero values and their position, set s, [row col value]
+initial_size = size(s_D_training,1);
 
 rank_k = noise_factor * rank(D_training); % calculate the dimension of the latent factors
 rank_k = round(rank_k) % round
+rank_k = 4
 
 % Initialise U & V
-U = ones(size(D_training,1),rank_k);
-V = ones(size(D_training,2),rank_k);
+U = rand(size(D_training,1),rank_k);
+V = rand(size(D_training,2),rank_k);
 
 while size(s_D_training,1) > 0 % iterate whilst there are still error values that haven't met the convergence criterion
     
@@ -31,7 +33,7 @@ while size(s_D_training,1) > 0 % iterate whilst there are still error values tha
             u_entry = U(i,q); % current u entry
             v_entry = V(j,q); % current v entry
             
-            E(i,j);
+            error_entry = E(i,j) % error entry
             
             u_next_entry = calc_next_u(u_entry,i,q,E,V,step) % calculate the next u entry
             U_next(i,q) = u_next_entry; % assign new u entry to U_next
@@ -48,10 +50,14 @@ while size(s_D_training,1) > 0 % iterate whilst there are still error values tha
     E = D_training - (U*V.'); % new error
     
     % Update s_D_training to contain only errors that do not meet the convergence criterion
-    [f,p] = find(E<converge_crit); % find values in E that are < converge_crit
+    [f,p] = find(E < converge_crit); % find values in E that are < converge_crit
+    t_loc = E < converge_crit; % location of value in E that are < converge_crit
+    t = E(t_loc); % vector of errors in E that are < converge_crit
     
-    t = diag(E(f,p)); % vector of errors that are still < converge_crit
     s_D_training = [f p t]; % update s_D_training
+    
+    new_size = size(s_D_training,1);
+    completion = ( 1 - (new_size / initial_size)) * 100
     
 end
 
