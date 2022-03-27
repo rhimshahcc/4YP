@@ -17,8 +17,8 @@ for n_pred = 1:size(nonzero_D_test,1) % iterate
     
     pred_test_it(row_pos,col_pos) = R_pred(row_pos,col_pos); % extract the value from R_pred and assign to pred_test
    
-    pred = R_pred(row_pos,col_pos) % predicted entry
-    acc = D_test(row_pos,col_pos) % actual entry
+    pred = R_pred(row_pos,col_pos); % predicted entry
+    acc = D_test(row_pos,col_pos); % actual entry
     
 end
 
