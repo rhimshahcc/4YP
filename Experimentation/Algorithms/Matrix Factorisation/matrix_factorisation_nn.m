@@ -1,5 +1,6 @@
-% A function to predict the nonzero values in D_test using SVD++ 
-% and then measure the error (RMSE).
+% A function to predict the nonzero values in D_test using non-negative MF 
+% and then measure the error (RMSE). Note that the 'nnmf' matlab function looks
+% at all entries, and not just the rated entries as it should.
 
 function rmse_mf = matrix_factorisation_nnmf(D_training,D_test)
 

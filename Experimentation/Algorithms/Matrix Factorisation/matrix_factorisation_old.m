@@ -1,7 +1,7 @@
 % A function to predict the nonzero values in D_test using SVD++ 
 % and then measure the error (RMSE).
 
-function rmse_mf = matrix_factorisation(D_training,D_test,step,noise_factor,converge_crit)
+function rmse_mf = matrix_factorisation_old(D_training,D_test,step,noise_factor,converge_crit)
 
 [i,j,v] = find(D_training);
 s_D_training = [i j v]; % matrix containing all the nonzero values and their position, set s, [row col value]

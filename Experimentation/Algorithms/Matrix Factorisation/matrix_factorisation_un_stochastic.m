@@ -1,7 +1,7 @@
 % A function to predict the nonzero values in D_test using stochastic GD 
 % and then measure the error (RMSE).
 
-function rmse_mf = matrix_factorisation_stochastic(D_training,D_test,step,noise_factor,converge_crit,it_max)
+function rmse_mf = matrix_factorisation_un_stochastic(D_training,D_test,step,noise_factor,converge_crit,it_max)
 
 [i,j,v] = find(D_training);
 s_D_training = [i j v]; % matrix containing all the nonzero values and their position, set s, [row col value]
