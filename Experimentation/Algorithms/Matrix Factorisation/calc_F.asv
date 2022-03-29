@@ -13,14 +13,14 @@ for n_F_one = 1:size(s_D_training,1) % iterate on the number of nonzero values
 end
 
 % Divide each row by the square root of the number of nonzero values (i.e. 1s)
-for n_F_row = 1:size(D_training,1) % iterate on the number of rows of D_training
+for n_F_row = 1:size(D_training,1) % iterate on the number of row
     
-    row_vector = D_training(n_F_row,:); % form a row vector
+    row_vector = D_training(n_F_row,:);
     
-    D_training(n_F_row,:) = row_vector ./ sqrt(nnz(row_vector)); % replace each row with the new row vector
+    D_training(n_F_row,:) = row_vector ./ sqrrt(nnz(row_vector));
     
 end 
 
-F = D_training; % output F
+F = D_training; 
 
 end 

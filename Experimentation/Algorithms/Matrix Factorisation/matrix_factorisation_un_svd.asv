@@ -1,4 +1,4 @@
-% A function to predict the nonzero values in D_test using stochastic GD 
+% A function to predict the nonzero values in D_test using SVD++
 % and then measure the error (RMSE).
 
 function rmse_mf = matrix_factorisation_un_svd(D_training,D_test,step,noise_factor,converge_crit,it_max,lambda)
@@ -14,11 +14,11 @@ U = rand(size(D_training,1),rank_k);
 V = rand(size(D_training,2),rank_k);
 Y = rand(size(D_training,2),rank_k);
 
-% Calculate F
+% Calculate F & I_i
 F = calc_F(s_D_training,D_training);
 
 % Form pred_test 
-pred_test = form_pred_test(D_test,U,V);
+pred_test = form_pred_test(D_test,U,V,Y,F);
 
 % RMSE
 rmse_mf = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test), 'all' ) ); 
@@ -28,22 +28,25 @@ it_rmse = [0 rmse_mf];
 
 for it = 1:it_max % iterate whilst there are still error values that haven't met the convergence criterion
     
-    E = D_training - (U*V.'); % current error
+    E = D_training - (U + F*Y)*V.'; % current error across all entries
     
     for n_s = 1:size(s_D_training,1) % iterate on the error values that haven't met the convergence criterion
         
         i = s_D_training(n_s,1); % row position
         j = s_D_training(n_s,2); % col position
         
-        [U_next,V_next] = calc_next_U_V_svd(rank_k,i,j,step,U,V,E,lambda); % calculate U_next and V_next
+        I_i = nnz(D_training(i,:)); % number of nonzero values in row i
+        
+        [U_next,V_next,Y_next] = calc_next_U_V_svd(rank_k,i,j,step,U,V,Y,F,E,lambda,I_i); % calculate U_next and V_next
         
     end
     
     U = U_next; % update U, now that the iterations have finished
     V = V_next; % update V, now that the iterations have finished
+    Y = Y_next; % update Y, now that the iterations have finished
 
     % Form pred_test 
-    pred_test = form_pred_test(D_test,U,V);
+    pred_test = form_pred_test(D_test,U,V,Y,F);
 
     % RMSE
     rmse_mf = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test), 'all' ) );
