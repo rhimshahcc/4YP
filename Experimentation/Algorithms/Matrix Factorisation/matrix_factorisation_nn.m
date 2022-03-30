@@ -2,7 +2,7 @@
 % and then measure the error (RMSE). Note that the 'nnmf' matlab function looks
 % at all entries, and not just the rated entries as it should.
 
-function rmse_mf = matrix_factorisation_nnmf(D_training,D_test)
+function rmse_mf = matrix_factorisation_nn(D_training,D_test,step,noise_factor,it_max,lambda)
 
 [U,W] = nnmf(D_training,5);
 V = W.';

@@ -1,12 +1,12 @@
 % A function to calculate pred_test.
 
-function pred_test = form_pred_test(D_test,U,V,Y,F)
+function pred_test = form_pred_test(D_test,U,V)
 
 % form pred_test by selecting all the values from D_test
 [i,j,v] = find(D_test);
 nonzero_D_test = [i j v]; % matrix containing all the nonzero values and their position, [row col value]
 
-R_pred = (U + F*Y)*V.'; % predicted value of R
+R_pred = U*V.'; % predicted value of R
 
 pred_test_it = zeros(size(D_test)); % initialise an empty pred_test matrix
 
