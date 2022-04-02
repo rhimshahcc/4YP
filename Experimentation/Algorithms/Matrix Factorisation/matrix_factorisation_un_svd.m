@@ -8,7 +8,7 @@ s_D_training = [i j v]; % matrix containing all the nonzero values and their pos
 
 rank_k = noise_factor * rank(D_training); % calculate the dimension of the latent factors
 rank_k = round(rank_k); % round
-%rank_k = 1
+rank_k = 2
 
 % Initialise U & V
 U = rand(size(D_training,1),rank_k);
@@ -19,7 +19,7 @@ Y = rand(size(D_training,2),rank_k);
 F = calc_F(s_D_training,D_training);
 
 % Form pred_test 
-pred_test = form_pred_test_svd(D_test,U,V,Y,F)
+pred_test = form_pred_test_svd(D_test,U,V,Y,F);
 
 % RMSE
 rmse_mf = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test), 'all' ))
@@ -54,7 +54,7 @@ for it = 1:it_max % iterate whilst there are still error values that haven't met
     
     it_rmse = [it_rmse ; it rmse_mf]; % iteration number and correpsonding rmse
     
-    completion = (it / it_max) * 100; % percentage completion
+    completion = (it / it_max) * 100 % percentage completion
     
 end
 

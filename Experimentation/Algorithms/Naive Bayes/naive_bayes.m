@@ -40,7 +40,7 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
         nb_item_prob = item_prior .* item_likelihood;
         
         % grow item_vect_prob by each value
-        item_vect_prob = [ item_vect_prob ; n_item_rating nb_item_prob];
+        item_vect_prob = [ item_vect_prob ; n_item_rating nb_item_prob ];
         
         % Preallocation method
         %item_vect_prob(n_item_val,1) = n_item_rating;

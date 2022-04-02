@@ -9,13 +9,13 @@ addpath('../../Generic Functions')
 % Yahoo_Music_Ratings.txt
 
 % Form the data matrix
-txt_file = '../../Datasets/Movie_Lens_Ratings.txt';
+txt_file = '../../Datasets/Yahoo_Music_Ratings.txt';
 D = readmatrix(txt_file);
 D = D(:,1:3);
 ratings_matrix = make_ratings_matrix(D, txt_file); % form the ratings matrix
 
 % Form a smaller test matrix
-test_matrix = make_test_matrix(ratings_matrix,1200,1200);
+test_matrix = make_test_matrix(ratings_matrix,500,500);
 ratings_matrix = test_matrix;
 
 % Inputs
@@ -33,12 +33,12 @@ error = cross_val_error(ratings_matrix,D_split,split); % check how many values h
 % Inputs
 step = 0.0001; % gradient descent step value 
 noise_factor = calc_sparsity(D_training) ./ 100 ; % how much noise is there in the LFM rank
-it_max = 100; % number of iterations of GD
+it_max = 400; % number of iterations of GD
 lambda = 0; % regularisation term (to prevent overfitting)
 
 % Carry our MF
 tic
-rmse_mf = matrix_factorisation_nn(D_training,D_test,step,noise_factor,it_max,lambda)
+rmse_mf = matrix_factorisation_un_svd(D_training,D_test,step,noise_factor,it_max,lambda)
 toc
 
 calc_sparsity(D_training);
