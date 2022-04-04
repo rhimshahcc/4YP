@@ -1,6 +1,6 @@
 % Clear all previously defined variables
 clear all
-addpath('../../Generic Functions') 
+addpath('../Generic Functions') 
 
 % Datasets:
 
@@ -9,15 +9,15 @@ addpath('../../Generic Functions')
 % Movie_Lens_Ratings.txt
 
 % Form the data matrix
-txt_file = '../Datasets/Restaurant_Rec_ratings.txt';
+txt_file = '../Datasets/Movie_Lens_Ratings.txt';
 D = readmatrix(txt_file);
 
 % Form the ratings matrix
 ratings_matrix = make_ratings_matrix(D, txt_file);
 
 % Form a smaller test matrix
-%test_matrix = make_test_matrix(ratings_matrix,1200,1200);
-%ratings_matrix = test_matrix;
+test_matrix = make_test_matrix(ratings_matrix,1200,1200);
+ratings_matrix = test_matrix;
 
 % Ratings matrix information
 

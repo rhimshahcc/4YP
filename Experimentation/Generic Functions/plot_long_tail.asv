@@ -14,7 +14,7 @@ long_tail = transpose(long_tail);
 
 % Plot a bar graph.
 bar(long_tail(:,1));
-xlabel('Ranked item number by popularity') % x axis is the item no.
+xlabel('Item number (not li)') % x axis is the item no.
 ylabel('Frequency of each item') % y axis is the frequency of the item no.
 
 end
