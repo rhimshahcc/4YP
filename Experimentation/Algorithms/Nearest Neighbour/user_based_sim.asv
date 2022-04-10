@@ -1,3 +1,4 @@
+
 % A function that outputs a matrix of the correlation between the target
 % row and all the other rows, across entries that are nonzero i.e. rated.
 
@@ -24,12 +25,12 @@ for n_row = 1:size(D_training,1) % iterate through all the rows
             
         end
         
-        if size(rows_matrix,1) > 1
-            
-            corr_row = calc_pearson_corr(rows_matrix); % calculate the pearson correlation on rows_matrix, between the paired nonzero rows
-            user_corr_matrix = [ user_corr_matrix ; n_row corr_row ]; % assign to a matrix that contains the row number and the correletion
-            
-        end
+        
+        corr_row = calc_pearson_corr(rows_matrix); % calculate the pearson correlation on rows_matrix, between the paired nonzero rows
+        user_corr_matrix = [ user_corr_matrix ; n_row corr_row ]; % assign to a matrix that contains the row number and the correletion
+        
+        
+        nan_elements = isnan(corr_row); % check for any nan elements
         
     end
     

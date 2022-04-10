@@ -14,7 +14,7 @@ mutual_false_entries = 0;
 
 for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     
-    completion = n./nnz(D_test) * 100
+    completion = n./nnz(D_test) * 100;
 
     % The nonzero value's position in the matrix
     row_pos = nonzero_D_test(n,1);
@@ -63,10 +63,16 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
         
     end
     
-    %acc_entry = D_test(row_pos,col_pos)
-   
-    pred_test(row_pos,col_pos) = pred_entry;
-
+    %acc_entry = D_test(row_pos,col_pos);
+    
+ 
+    
+    % Add the value to a blank matrix: pred_test, if it is a real number
+    %is_nan = isnan(pred_entry);
+    %is_inf = isinf(pred_entry); 
+    %if (is_nan == 0) && (is_inf == 0)   
+    %    pred_test(row_pos,col_pos) = pred_entry;
+    %end
     
 end
 
