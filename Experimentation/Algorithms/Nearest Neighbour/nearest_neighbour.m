@@ -10,11 +10,13 @@ pred_test = zeros(size(D_test,1),size(D_test,2)); % blank matrix to hold predict
 
 user_false_entries = 0; % initialise the user-based false entries counter
 item_false_entries = 0; % initialise the item-based false entries counter
-mutual_false_entries = 0;
+mutual_false_entries = 0; % initialise the mutual false entries counter, i.e. ones that cannot be predicted at all
+
+D_test_size = nnz(D_test); % initilise size of D_test 
 
 for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     
-    completion = n./nnz(D_test) * 100
+    completion = n./D_test_size * 100
 
     % The nonzero value's position in the matrix
     row_pos = nonzero_D_test(n,1);
@@ -43,15 +45,15 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     end
     
     % Average item & user predictions to remove bias  
-    if user_pred_entry ~= 0 && item_pred_entry ~= 0
+    if user_pred_entry ~= 0 && item_pred_entry ~= 0 && isfinite(user_pred_entry) && isfinite(item_pred_entry)
         
         pred_entry = (user_pred_entry + item_pred_entry)./2; % average item & user predictions 
         
-    elseif user_pred_entry == 0 && item_pred_entry ~= 0
+    elseif item_pred_entry ~= 0 && isfinite(item_pred_entry) && (user_pred_entry == 0 || isinf(user_pred_entry))
         
         pred_entry = item_pred_entry; % pred_entry is the item entry if the user entry is false
         
-    elseif user_pred_entry ~= 0 && item_pred_entry == 0
+    elseif user_pred_entry ~= 0 && isfinite(user_pred_entry) && (item_pred_entry == 0 || isinf(item_pred_entry))
         
         pred_entry = user_pred_entry; % pred_entry is the user entry if the item entry is false
         
@@ -63,16 +65,16 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
         
     end
     
+    %pred_entry
     %acc_entry = D_test(row_pos,col_pos)
    
     pred_test(row_pos,col_pos) = pred_entry;
 
-    
 end
 
 no_false_entries = [nnz(D_test)+mutual_false_entries user_false_entries item_false_entries mutual_false_entries] % no. of [entries_to_predict user item both]
 
 % RMSE
-rmse_nn = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test), 'all' ) );  
+rmse_nn = sqrt( sum(((D_test - pred_test).^2) ./ nnz(pred_test), 'all') );  
 
 end 
