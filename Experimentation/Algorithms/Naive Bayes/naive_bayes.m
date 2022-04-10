@@ -8,8 +8,7 @@ nonzero_D_test = [i j v]; % matrix containing all the nonzero values and their p
 
 pred_test = zeros(size(D_test,1),size(D_test,2)); % blank matrix to hold predicted D_test
 
-%user_false_entries = 0; % initialise the user-based false entries counter
-%item_false_entries = 0; % initialise the item-based false entries counter
+false_entries = 0;
 
 for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     
@@ -21,9 +20,6 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
 
     poss_ratings = unique(D_training); % find all the unique ratings in the dataset 
     item_vect_prob = []; % holds the probabilities for an entry, item-based
-    
-    % Preallocation method
-    %item_vect_prob = zeros(size(poss_ratings,1)-1,2);
     
     % item-based
     for n_item_val = 1:size(poss_ratings,1)-1 % iterate through the possible rating values 
@@ -42,10 +38,6 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
         % grow item_vect_prob by each value
         item_vect_prob = [ item_vect_prob ; n_item_rating nb_item_prob ];
         
-        % Preallocation method
-        %item_vect_prob(n_item_val,1) = n_item_rating;
-        %item_vect_prob(n_item_val,2) = nb_item_prob;
-        
     end
     
     % Find the maximum value from item_vect_pred, asssign to pred_entry
@@ -59,11 +51,22 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     
     if (is_nan == 0) && (is_inf == 0)
         
-        pred_test(row_pos,col_pos) = pred_entry;
+        pred_test(row_pos,col_pos) = pred_entry; % update pred_test
+        
+    else
+        
+        false_entries = false_entries + 1; % increase false entries counter by 1
+        
+        pred_entry = 0; % assign the entry as zero
+        D_test(row_pos,col_pos) = 0; % remove the entry from D_test
+        
+        pred_test(row_pos,col_pos) = pred_entry; % update pred_test
     
     end
     
 end
+
+false_entries
 
 % RMSE
 rmse_nb = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test), 'all' ) );  

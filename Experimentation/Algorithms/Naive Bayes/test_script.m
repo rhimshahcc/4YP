@@ -5,7 +5,6 @@ addpath('../../Generic Functions')
 % Datasets:
 % Restaurant_Rec_ratings.txt
 % Movie_Lens_Ratings.txt
-
 % Yahoo_Music_Ratings.txt
 
 % Form the data matrix
@@ -15,7 +14,7 @@ D = D(:,1:3);
 ratings_matrix = make_ratings_matrix(D, txt_file); % form the ratings matrix
 
 % Form a smaller test matrix
-test_matrix = make_test_matrix(ratings_matrix,500,500);
+test_matrix = make_test_matrix(ratings_matrix,1200,1200);
 ratings_matrix = test_matrix;
 
 % Inputs

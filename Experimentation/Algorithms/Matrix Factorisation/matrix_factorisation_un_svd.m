@@ -8,7 +8,7 @@ s_D_training = [i j v]; % matrix containing all the nonzero values and their pos
 
 rank_k = noise_factor * rank(D_training); % calculate the dimension of the latent factors
 rank_k = round(rank_k); % round
-rank_k = 2
+rank_k = 3;
 
 % Initialise U & V
 U = rand(size(D_training,1),rank_k);
@@ -22,7 +22,7 @@ F = calc_F(s_D_training,D_training);
 pred_test = form_pred_test_svd(D_test,U,V,Y,F);
 
 % RMSE
-rmse_mf = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test), 'all' ))
+rmse_mf = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test), 'all' ));
 
 % Plot convergence 
 it_rmse = [0 rmse_mf];
