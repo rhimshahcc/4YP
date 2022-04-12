@@ -19,7 +19,7 @@ ratings_matrix = test_matrix;
 
 % Inputs
 split = 4; % number of cross-validation folds
-k = 30; % Select the top k% similar rows/col
+k = 25; % Select the top k% similar rows/col
 
 % Cross Validation
 D_split = cross_validation_nn(ratings_matrix,split);

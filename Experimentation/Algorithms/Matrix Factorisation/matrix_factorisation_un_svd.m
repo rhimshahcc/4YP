@@ -1,7 +1,7 @@
 % A function to predict the nonzero values in D_test using SVD++
 % and then measure the error (RMSE).
 
-function rmse_mf = matrix_factorisation_un_svd(D_training,D_test,step,noise_factor,it_max,lambda)
+function rmse_mf = matrix_factorisation_un_svd(D_training,D_test,step,noise_factor,lambda,conv_crit)
 
 [i,j,v] = find(D_training);
 s_D_training = [i j v]; % matrix containing all the nonzero values and their position, set s, [row col value]
@@ -27,7 +27,12 @@ rmse_mf = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test), 'all' ));
 % Plot convergence 
 it_rmse = [0 rmse_mf];
 
-for it = 1:it_max % iterate whilst there are still error values that haven't met the convergence criterion
+rmse_mf_diff = 5; % Difference between the rmse s
+it = 0; % initialise iterations
+
+while rmse_mf_diff > conv_crit  % iterate whilst there are still error values that haven't met the convergence criterion
+    
+    it = it +1
     
     E = D_training - (U + F*Y)*V.'; % current error across all entries
     
@@ -52,13 +57,17 @@ for it = 1:it_max % iterate whilst there are still error values that haven't met
     % RMSE
     rmse_mf = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test), 'all' ));
     
+    rmse_mf_diff = abs(rmse_mf - it_rmse(end,2)); % update the difference between the current rmse_mf and the last rmse_mf
+    
     it_rmse = [it_rmse ; it rmse_mf]; % iteration number and correpsonding rmse
     
-    completion = (it / it_max) * 100 % percentage completion
+    %completion = (it / it_max) * 100 % percentage completion
     
 end
 
 rank_k
+
+rmse_change = abs((it_rmse(end,2) - it_rmse(1,2)) ./ it_rmse(1,2)) * 100
 
 plot(it_rmse(:,1),it_rmse(:,2)) % plot the convergence
 
