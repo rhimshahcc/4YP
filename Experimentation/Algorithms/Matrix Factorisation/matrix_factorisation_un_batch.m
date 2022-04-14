@@ -8,7 +8,7 @@ s_D_training = [i j v]; % matrix containing all the nonzero values and their pos
 
 rank_k = noise_factor * rank(D_training); % calculate the dimension of the latent factors
 rank_k = round(rank_k); % round
-rank_k = 6;
+rank_k = 3;
 
 % Initialise U & V
 U = rand(size(D_training,1),rank_k);
@@ -65,6 +65,8 @@ end
 rank_k
 
 rmse_change = abs((it_rmse(end,2) - it_rmse(1,2)) ./ it_rmse(1,2)) * 100
+
+initial_rmse = it_rmse(1,2)
 
 plot(it_rmse(:,1),it_rmse(:,2))
 

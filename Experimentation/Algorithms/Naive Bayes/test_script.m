@@ -7,19 +7,18 @@ addpath('../../Generic Functions')
 % Movie_Lens_Ratings.txt
 % Yahoo_Music_Ratings.txt
 
-% Form the data matrix
 txt_file = '../../Datasets/Restaurant_Rec_ratings.txt';
 D = readmatrix(txt_file);
 D = D(:,1:3);
 ratings_matrix = make_ratings_matrix(D, txt_file); % form the ratings matrix
 
 % Form a smaller test matrix
-%test_matrix = make_test_matrix(ratings_matrix,1200,1200);
+%test_matrix = make_test_matrix(ratings_matrix,500,500);
 %ratings_matrix = test_matrix;
 
 % Inputs
 split = 4; % number of cross-validation folds
-alpha = 0.2; % additive smoothing parameter 
+alpha = 0.5; % additive smoothing parameter 
 
 % Cross Validation
 D_split = cross_validation_nn(ratings_matrix,split);
