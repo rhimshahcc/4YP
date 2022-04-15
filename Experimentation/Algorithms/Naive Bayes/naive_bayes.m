@@ -1,7 +1,7 @@
 % A function to predict the nonzero values in D_test using the naive bayes method
 % and then measure the error (RMSE).
 
-function rmse_nb = naive_bayes(D_training,D_test,alpha)
+function [rmse_nb,pred_test] = naive_bayes(D_training,D_test,alpha)
 
 [i,j,v] = find(D_test);
 nonzero_D_test = [i j v]; % matrix containing all the nonzero values and their position

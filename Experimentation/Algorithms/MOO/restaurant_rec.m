@@ -1,6 +1,9 @@
 % Clear all previously defined variables
 clear all
 addpath('../../Generic Functions') 
+addpath('../Nearest Neighbour') 
+addpath('../Naive Bayes') 
+addpath('../Matrix Factorisation') 
 
 % Datasets:
 % Restaurant_Rec_ratings.txt
@@ -19,42 +22,32 @@ ratings_matrix = make_ratings_matrix(D, txt_file); % form the ratings matrix
 alpha = 0.5; % additive smoothing parameter 
 
 % User Ranking
-user_row = select_user_row(ratings_matrix); % Select a random row from the ratings matrix, replace all the 0s with 1s so that they are rated 
-% insert the row into a blank matrix and assign to test_D
 
-% Replace the rated entries with 0s
-test_D = user_row; % let this be the test_D
-D_training = ratings_matrix;
-[~,pred_test] = naive_bayes(D_training,D_test,alpha); % Perform CF to predict the ratings of the 1s (i.e. the unrated items)
-% Combine with the '0s' ratings, i.e. the rated items, JUST ADD THEM TOGETHER 
-% Form ranking and output
+[user_row,row_number] = select_user_row(ratings_matrix); % select a random row from the ratings matrix, switch values 
+D_test = zeros(size(ratings_matrix,1),size(ratings_matrix,2)); % generate a blank matrix 
+D_test(row_number,:) = user_row; % insert the user_row into a blank matrix and assign to test_D
+D_training = ratings_matrix; % the training dataset is the whole ratings matrix
+
+[~,pred_test] = naive_bayes(D_training,D_test,alpha); % Perform CF to predict the ratings of the unrated items
+pred_user_row = D_training(row_number,:) + pred_test(row_number,:); % Combine with the '0s' ratings, i.e. the rated items 
+user_ranking = user_rank(pred_user_row); % Form ranking and output
 
 % Business Ranking
+
 % Rank items based on the objective
 % Output the ranking list
+business_ranking
 
 % Vendor Ranking
+
 % Group fairness: group items randomly into buckets
 % Create an alternating ranking list from items from these buckets
 % Note that this list would rotate every time the user requests a new recomendation list
+vendor_ranking
 
-alpha = 0.5; % additive smoothing parameter 
+% MOO to form thee final ranking 
+output_ranking = moo(user_ranking,business_ranking,vendor_ranking);
 
-
-
-
-
-% Carry out naive bayes
-tic
-rmse_nb = naive_bayes(D_training,D_test,alpha)
-toc
-
-% Store each value in a vector
-%rmse_nn_values = rmse_nn_values[:,rmse_nn]
-
-% end
-
-% mean(rmse_nn_values)
 
 % Prevents orange errors from appearing in the workspace
 warning off

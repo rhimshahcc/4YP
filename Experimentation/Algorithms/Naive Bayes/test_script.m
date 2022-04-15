@@ -31,7 +31,7 @@ error = cross_val_error(ratings_matrix,D_split,split); % check how many values h
 
 % Carry out naive bayes
 tic
-rmse_nb = naive_bayes(D_training,D_test,alpha)
+[rmse_nb,~] = naive_bayes(D_training,D_test,alpha)
 toc
 
 % Store each value in a vector
