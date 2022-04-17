@@ -7,8 +7,8 @@ function rmse_mf = matrix_factorisation_un_stochastic(D_training,D_test,step,noi
 s_D_training = [i j v]; % matrix containing all the nonzero values and their position, set s, [row col value]
 
 rank_k = noise_factor * rank(D_training); % calculate the dimension of the latent factors
-rank_k = round(rank_k); % round
-rank_k = 8;
+rank_k = round(rank_k); % round  
+rank_k = 25;
 
 % Initialise U & V
 U = rand(size(D_training,1),rank_k);

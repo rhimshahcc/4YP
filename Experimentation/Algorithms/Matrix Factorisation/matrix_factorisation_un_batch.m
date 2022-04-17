@@ -8,7 +8,7 @@ s_D_training = [i j v]; % matrix containing all the nonzero values and their pos
 
 rank_k = noise_factor * rank(D_training); % calculate the dimension of the latent factors
 rank_k = round(rank_k); % round
-rank_k = 3;
+rank_k = 25;
 
 % Initialise U & V
 U = rand(size(D_training,1),rank_k);
