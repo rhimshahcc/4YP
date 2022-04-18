@@ -2,23 +2,23 @@
 clear all
 addpath('../../../Generic Functions') 
 addpath('../../MOO') 
-addpath('../../Matrix Factorisation') 
+addpath('../../Nearest Neighbour') 
 
-%addpath('../../Nearest Neighbour') 
+%addpath('../../Matrix Factorisation') 
 %addpath('../../Naive Bayes') 
 
 % Form the ratings matrix
-
-txt_file = '../../../Datasets/Restaurant_Rec_ratings.txt';
+txt_file = '../../../Datasets/movie_lens_ratings.txt';
 D = readmatrix(txt_file);
 D = D(:,1:3);
 ratings_matrix = make_ratings_matrix(D, txt_file); % form the ratings matrix
 
+% Form a smaller test matrix
+test_matrix = make_test_matrix(ratings_matrix,1200,1200);
+ratings_matrix = test_matrix;
+
 % Inputs
-step = 0.0001; % gradient descent step value 
-noise_factor = calc_sparsity(ratings_matrix) ./ 100 ; % how much noise is there in the LFM rank
-conv_crit = 0.0001; % convergence criterion
-lambda = 0.08; % regularisation term (to prevent overfitting)
+k = 25; % Select the top k% similar rows/col
 
 % User Ranking
 
@@ -27,19 +27,23 @@ D_test = zeros(size(ratings_matrix,1),size(ratings_matrix,2)); % generate a blan
 D_test(row_number,:) = user_row; % insert the user_row into a blank matrix and assign to test_D
 D_training = ratings_matrix; % the training dataset is the whole ratings matrix
 
-[~,pred_test] = matrix_factorisation_un_batch(D_training,D_test,step,noise_factor,lambda,conv_crit); % Perform CF to predict the ratings of the unrated items
+[~,pred_test] = nearest_neighbour(D_training,D_test,k); % Perform CF to predict the ratings of the unrated items
 pred_user_row = D_training(row_number,:) + pred_test(row_number,:); % Combine with the '0s' ratings, i.e. the rated items 
+
 user_ranking = user_rank(pred_user_row) % Form user ranking 
 
 % Vendor Ranking
 
-%vendor_ranking = vendor_rank(ratings_matrix,row_number); % Form vendor ranking 
+groups = 5; % number of groups to split the movies into
+%vendor_ranking = rr_vendor_rank(ratings_matrix,row_number,groups) % Form vendor ranking 
 
 % Business Ranking
 
-business_ranking = rr_business_rank(ratings_matrix,row_number) % Form business ranking 
+original_content = 40 ; % percentage of the items that are classed as 'original content'
+business_ranking = ml_business_rank(ratings_matrix,row_number,original_content) % Form business ranking 
 
-% MOO to form thee final ranking 
+% MOO to form the final ranking
+combined_ranking = [user_ranking(:,1) user_ranking(:,2) vendor_ranking(:,2) business_ranking(:,2)] % [rank user vendor business] 
 %output_ranking = moo(user_ranking,business_ranking,vendor_ranking);
 
 

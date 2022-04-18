@@ -32,7 +32,7 @@ error = cross_val_error(ratings_matrix,D_split,split); % Check how many values h
 
 % Carry our nearest neighbour
 tic
-rmse_nn = nearest_neighbour(D_training,D_test,k)
+[rmse_nn,~] = nearest_neighbour(D_training,D_test,k)
 toc
 
 % Store each value in a vector

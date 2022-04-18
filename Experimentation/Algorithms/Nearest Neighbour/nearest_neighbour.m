@@ -1,7 +1,7 @@
 % A function to predict the nonzero values in D_test using the K-NN method
 % and then measure the error (RMSE).
 
-function rmse_nn = nearest_neighbour(D_training,D_test,k)
+function [rmse_nn,pred_test] = nearest_neighbour(D_training,D_test,k)
 
 [i,j,v] = find(D_test);
 nonzero_D_test = [i j v];

@@ -1,10 +1,9 @@
 % A function to plot the long tail of a ratings matrix.
 
-function plot_long_tail(input_ratings_matrix)
+function plot_long_tail(ratings_matrix)
 
-% Counts the number of nonzero values in each column and turns it into a
-% row vector.
-long_tail = sum(input_ratings_matrix~=0);
+% Counts the number of nonzero values in each column and turns it into a row vector.
+long_tail = sum(ratings_matrix~=0);
 
 % Sorts the row vector into descending order.
 long_tail = sort(long_tail,'descend');

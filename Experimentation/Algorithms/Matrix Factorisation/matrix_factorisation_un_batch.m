@@ -1,14 +1,14 @@
 % A function to predict the nonzero values in D_test using batch GD 
 % and then measure the error (RMSE).
 
-function [rmse_mf,pred_test] = matrix_factorisation_un_batch(D_training,D_test,step,noise_factor,lambda,conv_crit)
+function [rmse_mf,pred_test] = matrix_factorisation_un_batch(D_training,D_test,step,rank_k,lambda,conv_crit)
 
 [i,j,v] = find(D_training);
 s_D_training = [i j v]; % matrix containing all the nonzero values and their position, set s, [row col value]
 
-rank_k = noise_factor * rank(D_training); % calculate the dimension of the latent factors
-rank_k = round(rank_k); % round
-rank_k = 25;
+%rank_k = noise_factor * rank(D_training); % calculate the dimension of the latent factors
+%rank_k = round(rank_k); % round
+%rank_k = 6;
 
 % Initialise U & V
 U = rand(size(D_training,1),rank_k);

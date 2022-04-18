@@ -32,12 +32,13 @@ error = cross_val_error(ratings_matrix,D_split,split); % check how many values h
 % Inputs
 step = 0.0001; % gradient descent step value 
 noise_factor = calc_sparsity(D_training) ./ 100 ; % how much noise is there in the LFM rank
+rank_k = 6; % directly input k
 conv_crit = 0.0001; % convergence criterion
 lambda = 0.08; % regularisation term (to prevent overfitting)
 
 % Carry our MF
 tic
-[rmse_mf,~] = matrix_factorisation_un_batch(D_training,D_test,step,noise_factor,lambda,conv_crit)
+[rmse_mf,~] = matrix_factorisation_un_batch(D_training,D_test,step,rank_k,lambda,conv_crit)
 toc
 
 calc_sparsity(D_training);
