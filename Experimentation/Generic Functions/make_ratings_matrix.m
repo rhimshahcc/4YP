@@ -10,7 +10,7 @@ c2 = input_dataset(:,2);
 
 % turn the 3rd column of the dataset into a column vector
 
-if isequal(dataset_type,'../Datasets/Movie_Lens_Ratings.txt') || isequal(dataset_type,'../../Datasets/Movie_Lens_Ratings.txt') || isequal(dataset_type,'../../../Datasets/Movie_Lens_Ratings.txt')
+if isequal(dataset_type,'../Datasets/Movie_Lens_Ratings.txt') || isequal(dataset_type,'../../Datasets/Movie_Lens_Ratings.txt') || isequal(dataset_type,'../../../Datasets/Movie_Lens_ratings.txt')
         c3 = input_dataset(:,3) * 2; % alter the movie_lens ratings
         
     elseif isequal(dataset_type,'../Datasets/Yahoo_Music_Ratings.txt') || isequal(dataset_type,'../../Datasets/Yahoo_Music_Ratings.txt') || isequal(dataset_type,'../../../Datasets/Yahoo_Music_ratings.txt')

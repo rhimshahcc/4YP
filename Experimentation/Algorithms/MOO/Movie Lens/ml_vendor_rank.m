@@ -1,15 +1,18 @@
 % A function to create a vendor ranking. 
 
-function vendor_ranking = rr_vendor_rank(ratings_matrix,row_number,groups)
+function vendor_ranking = ml_vendor_rank(ratings_matrix,groups)
 
-user_row = ratings_matrix(row_number,:); % extract the row
+it_end = round(size(ratings_matrix,2) ./ groups); % number of iterations
+groups_vector = []; % iitilaise a blank matrix
 
+for n = 1:(it_end + 1)
+    
+    groups_vector = [groups_vector 1:groups]; % form the groups vector
+    
+end
 
-% randomly assign numbers 1-5 to the items
-% select 
- 
-nonzero_user_row = find(user_row); % matrix containing the col positions of all the nonzero values in user_row
+groups_vector = groups_vector(:,1:size(ratings_matrix,2)); % eliminate excess values from the groups vector
 
-vendor_ranking = [ ones(1,size(nonzero_user_row,2)) ; nonzero_user_row ].';
+vendor_ranking = [ groups_vector ; randperm(size(ratings_matrix,2)) ].'; % output the final vendor ranking
 
 end 

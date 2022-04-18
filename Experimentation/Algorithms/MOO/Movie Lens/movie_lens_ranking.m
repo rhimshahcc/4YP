@@ -8,7 +8,7 @@ addpath('../../Nearest Neighbour')
 %addpath('../../Naive Bayes') 
 
 % Form the ratings matrix
-txt_file = '../../../Datasets/movie_lens_ratings.txt';
+txt_file = '../../../Datasets/Movie_Lens_ratings.txt';
 D = readmatrix(txt_file);
 D = D(:,1:3);
 ratings_matrix = make_ratings_matrix(D, txt_file); % form the ratings matrix
@@ -35,7 +35,7 @@ user_ranking = user_rank(pred_user_row) % Form user ranking
 % Vendor Ranking
 
 groups = 5; % number of groups to split the movies into
-%vendor_ranking = rr_vendor_rank(ratings_matrix,row_number,groups) % Form vendor ranking 
+vendor_ranking = ml_vendor_rank(ratings_matrix,groups) % Form vendor ranking 
 
 % Business Ranking
 
@@ -43,7 +43,7 @@ original_content = 40 ; % percentage of the items that are classed as 'original 
 business_ranking = ml_business_rank(ratings_matrix,row_number,original_content) % Form business ranking 
 
 % MOO to form the final ranking
-combined_ranking = [user_ranking(:,1) user_ranking(:,2) vendor_ranking(:,2) business_ranking(:,2)] % [rank user vendor business] 
+
 %output_ranking = moo(user_ranking,business_ranking,vendor_ranking);
 
 
