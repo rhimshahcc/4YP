@@ -37,7 +37,7 @@ lambda = 0.08; % regularisation term (to prevent overfitting)
 
 % Carry our MF
 tic
-rmse_mf = matrix_factorisation_un_batch(D_training,D_test,step,noise_factor,lambda,conv_crit)
+[rmse_mf,~] = matrix_factorisation_un_batch(D_training,D_test,step,noise_factor,lambda,conv_crit)
 toc
 
 calc_sparsity(D_training);
