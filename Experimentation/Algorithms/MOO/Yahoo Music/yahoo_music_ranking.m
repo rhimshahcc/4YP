@@ -33,15 +33,15 @@ D_training = ratings_matrix; % the training dataset is the whole ratings matrix
 [~,pred_test] = matrix_factorisation_un_batch(D_training,D_test,step,rank_k,lambda,conv_crit); % Perform CF to predict the ratings of the unrated items
 pred_user_row = D_training(row_number,:) + pred_test(row_number,:); % Combine with the '0s' ratings, i.e. the rated items 
 
-user_ranking = user_rank(pred_user_row); % Form user ranking 
+user_ranking = user_rank(pred_user_row) % Form user ranking 
 
 % Vendor Ranking
 
-vendor_ranking = ym_vendor_rank(ratings_matrix); % Form vendor ranking 
+vendor_ranking = ym_vendor_rank(ratings_matrix) % Form vendor ranking 
 
 % Business Ranking
 
-business_ranking = ym_business_rank(ratings_matrix,row_number); % Form business ranking 
+business_ranking = ym_business_rank(ratings_matrix,row_number) % Form business ranking 
 
 % MOO to form the final ranking
 

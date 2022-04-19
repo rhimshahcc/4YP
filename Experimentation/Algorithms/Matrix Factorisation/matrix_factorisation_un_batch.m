@@ -28,7 +28,7 @@ it = 0; % initialise iterations
 
 while rmse_mf_diff > conv_crit  % iterate whilst there are still error values that haven't met the convergence criterion
     
-    it = it +1
+    it = it +1;
     
     E = zeros(size(D_training));
     E_unfiltered = D_training - (U*V.'); % current error
@@ -62,12 +62,12 @@ while rmse_mf_diff > conv_crit  % iterate whilst there are still error values th
     
 end
 
-rank_k
+rank_k;
 
-rmse_change = abs((it_rmse(end,2) - it_rmse(1,2)) ./ it_rmse(1,2)) * 100
+rmse_change = abs((it_rmse(end,2) - it_rmse(1,2)) ./ it_rmse(1,2)) * 100;
 
-initial_rmse = it_rmse(1,2)
+initial_rmse = it_rmse(1,2);
 
-plot(it_rmse(:,1),it_rmse(:,2))
+plot(it_rmse(:,1),it_rmse(:,2));
 
 end 

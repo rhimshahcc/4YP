@@ -12,6 +12,6 @@ random_user_row = randperm(row_length); % row of random numbers, representing th
 original_user_rows = random_user_row(:,1:original_row_length); % original content item numbers
 other_user_rows = random_user_row(:,original_row_length+1:row_length); % other content item numbers
 
-business_ranking = [ ones(1,original_row_length) zeros(1,other_row_length)  ; original_user_rows other_user_rows ].'; % form the final business ranking
+business_ranking = [ ones(1,original_row_length) 2.*ones(1,other_row_length)  ; original_user_rows other_user_rows ].'; % form the final business ranking
 
 end 
