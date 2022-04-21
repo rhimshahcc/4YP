@@ -42,27 +42,13 @@ vendor_ranking = ml_vendor_rank(ratings_matrix,groups); % Form vendor ranking
 business_ranking = ml_business_rank(ratings_matrix,row_number); % Form business ranking 
 
 % MOO to form the final ranking
-n = 80
-output_ranking_matrix = [];
-
 while n < 450
-    
-    max_target_error = n
-    output_ranking = moo_epsilon(business_ranking,vendor_ranking,user_ranking,max_target_error)
-    business_ranking_error = ranking_error(business_ranking,output_ranking)
-    
-    output_ranking_matrix = [output_ranking_matrix ; n business_ranking_error ]
-    n = n + 10;
-    
+    output_ranking = moo_epsilon(user_ranking,vendor_ranking,business_ranking,n);
+    outp
+    n = n+10;
 end
-
-plot(output_ranking_matrix(:,1),output_ranking_matrix(:,2));
-xlabel('Max target Error for the User Ranking') % x axis is the item no.
-ylabel('Business Ranking & Output Ranking Error') % y axis is the frequency of the item no.
-
-%max_target_error = 450;
-%output_ranking = moo_epsilon(user_ranking,vendor_ranking,business_ranking,max_target_error);
-
+max_target_error = 450;
+output_ranking = moo_epsilon(user_ranking,vendor_ranking,business_ranking,max_target_error);
 toc
 
 % Ranking Error

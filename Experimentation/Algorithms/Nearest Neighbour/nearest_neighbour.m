@@ -16,7 +16,7 @@ D_test_size = nnz(D_test); % initilise size of D_test
 
 for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
     
-    completion = n./D_test_size * 100
+    completion = n./D_test_size * 100;
 
     % The nonzero value's position in the matrix
     row_pos = nonzero_D_test(n,1);
@@ -73,7 +73,7 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
 
 end
 
-no_false_entries = [nnz(D_test)+mutual_false_entries user_false_entries item_false_entries mutual_false_entries] % no. of [entries_to_predict user item both]
+no_false_entries = [nnz(D_test)+mutual_false_entries user_false_entries item_false_entries mutual_false_entries]; % no. of [entries_to_predict user item both]
 
 % RMSE
 rmse_nn = sqrt( sum(((D_test - pred_test).^2) ./ nnz(pred_test), 'all') );  
