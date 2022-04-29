@@ -1,10 +1,6 @@
 % A function to calculate the next value of U and V.
 
-function [U_next,V_next,Y_next] = calc_next_U_V_svd(rank_k,i,j,step,U,V,Y,E,lambda,I)
-        
-U_next = U; % initialise U_next
-V_next = V; % initialise V_next
-Y_next = Y; % initialise Y_next
+function [U,V,Y] = calc_next_U_V_svd(rank_k,i,j,step,U,V,Y,E,lambda,I)
 
 I_i = nnz(I); % number of nonzero values in row i
 
@@ -27,15 +23,15 @@ for q = 1:rank_k % iterate, turn this into a function
         y_entries = [ y_entries ; y_entry ]; % vector of y entries for a specified q
         
         y_next_entry = y_entry + (step * error_entry * v_entry)./sqrt(I_i) - (step * lambda * y_entry); % calculate the next y entry
-        Y_next(h,q) = y_next_entry; % assign new y entry to Y_next
+        Y(h,q) = y_next_entry; % assign new y entry to Y_next
         
     end
 
     u_next_entry = u_entry + (step * error_entry * v_entry) - (step * lambda * u_entry); % calculate the next u entry
-    U_next(i,q) = u_next_entry; % assign new u entry to U_next
+    U(i,q) = u_next_entry; % assign new u entry to U_next
 
     v_next_entry = v_entry + (step * error_entry * (u_entry + sum(y_entries)./sqrt(I_i) )) - (step * lambda * v_entry); % calculate the next v entry
-    V_next(j,q) = v_next_entry; % assign new v entry to V_next
+    V(j,q) = v_next_entry; % assign new v entry to V_next
                 
 end
 

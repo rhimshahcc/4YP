@@ -1,14 +1,10 @@
 % A function to predict the nonzero values in D_test using stochastic GD 
 % and then measure the error (RMSE).
 
-function rmse_mf = matrix_factorisation_un_stochastic(D_training,D_test,step,noise_factor,lambda,conv_crit)
+function [rmse_mf,pred_test] = matrix_factorisation_un_stochastic(D_training,D_test,step,rank_k,lambda,conv_crit)
 
 [i,j,v] = find(D_training);
 s_D_training = [i j v]; % matrix containing all the nonzero values and their position, set s, [row col value]
-
-rank_k = noise_factor * rank(D_training); % calculate the dimension of the latent factors
-rank_k = round(rank_k); % round  
-rank_k = 25;
 
 % Initialise U & V
 U = rand(size(D_training,1),rank_k);
@@ -32,13 +28,14 @@ while rmse_mf_diff > conv_crit  % iterate whilst there are still error values th
     
     E = D_training - (U*V.'); % current error
     
+    random_rows = randperm(size(s_D_training,1)).'; % generate a list of random row numbers
+    
     for n_s = 1:size(s_D_training,1) % iterate on the error values that haven't met the convergence criterion
         
-        i = s_D_training(n_s,1); % row position
-        j = s_D_training(n_s,2); % col position
+        n_random = random_rows(n_s,1); % select the random row
         
-        U_next = U; % initialise U_next
-        V_next = V; % initialise V_next
+        i = s_D_training(n_random,1); % row position
+        j = s_D_training(n_random,2); % col position
         
         for q = 1:rank_k % iterate
             
@@ -47,17 +44,14 @@ while rmse_mf_diff > conv_crit  % iterate whilst there are still error values th
             error_entry = E(i,j); % error entry
             
             u_next_entry = u_entry + (step * error_entry * v_entry); % calculate the next u entry
-            U_next(i,q) = u_next_entry; % assign new u entry to U_next
+            U(i,q) = u_next_entry; % assign new u entry to U_next
             
             v_next_entry = v_entry + (step * error_entry * u_entry); % calculate the next v entry
-            V_next(j,q) = v_next_entry; % assign new v entry to V_next
+            V(j,q) = v_next_entry; % assign new v entry to V_next
             
         end
         
-    end
-    
-    U = U_next; % update U, now that the iterations have finished
-    V = V_next; % update V, now that the iterations have finished
+    end 
 
     % Form pred_test 
     pred_test = form_pred_test(D_test,U,V);
@@ -68,8 +62,6 @@ while rmse_mf_diff > conv_crit  % iterate whilst there are still error values th
     rmse_mf_diff = abs(rmse_mf - it_rmse(end,2)); % update the difference between the current rmse_mf and the last rmse_mf
     
     it_rmse = [it_rmse ; it rmse_mf]; % iteration number and correpsonding rmse
-    
-    %completion = (it / it_max) * 100; % percentage completion
     
 end
 
