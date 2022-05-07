@@ -55,7 +55,7 @@ while actual_target_error > max_target_error % user_ranking --> (tends to) --> b
     
 end
 
-output_ranking = new_ranking;
+
 
 end 
 

@@ -28,9 +28,7 @@ it = 0; % initialise iterations
 
 while rmse_mf_diff > conv_crit  % iterate whilst there are still error values that haven't met the convergence criterion
     
-    it = it +1
-    
-    E = D_training - (U + F*Y)*V.'; % current error across all entries
+    it = it +1;
     
     random_rows = randperm(size(s_D_training,1)).'; % generate a list of random row numbers
     
@@ -41,9 +39,13 @@ while rmse_mf_diff > conv_crit  % iterate whilst there are still error values th
         i = s_D_training(n_random,1); % row position
         j = s_D_training(n_random,2); % col position
         
+        F_Y = F(i,:)*Y;
+        
+        error_entry = D_training(i,j) - sum( ( U(i,:) + F_Y ) .* V(j,:) );
+        
         I = D_training(i,:); % extract the ith row from D_training
              
-        [U,V,Y] = calc_next_U_V_svd(rank_k,i,j,step,U,V,Y,E,lambda,I); % calculate U_next, V_next and Y_next
+        [U,V,Y] = calc_next_U_V_svd(rank_k,i,j,step,U,V,Y,error_entry,lambda,I,F_Y); % calculate U_next, V_next and Y_next
         
     end
 
@@ -51,7 +53,7 @@ while rmse_mf_diff > conv_crit  % iterate whilst there are still error values th
     pred_test = form_pred_test_svd(D_test,U,V,Y,F);
 
     % RMSE
-    rmse_mf = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test), 'all' ))
+    rmse_mf = sqrt( sum( ((D_test - pred_test).^2) ./ nnz(pred_test), 'all' ));
     
     rmse_mf_diff = abs(rmse_mf - it_rmse(end,2)); % update the difference between the current rmse_mf and the last rmse_mf
     
@@ -60,6 +62,8 @@ while rmse_mf_diff > conv_crit  % iterate whilst there are still error values th
 end
 
 rank_k
+
+it
 
 rmse_change = abs((it_rmse(end,2) - it_rmse(1,2)) ./ it_rmse(1,2)) * 100
 

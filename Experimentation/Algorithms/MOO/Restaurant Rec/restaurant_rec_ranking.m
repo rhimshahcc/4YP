@@ -16,9 +16,9 @@ ratings_matrix = make_ratings_matrix(D, txt_file); % form the ratings matrix
 
 % Inputs
 step = 0.001; % gradient descent step value 
-rank_k = 6;
+rank_k = 3;
 conv_crit = 0.000001; % convergence criterion
-lambda = 0.08; % regularisation term (to prevent overfitting)
+lambda = 0.2; % regularisation term (to prevent overfitting)
 
 % User Ranking
 
@@ -27,10 +27,10 @@ D_test = zeros(size(ratings_matrix,1),size(ratings_matrix,2)); % generate a blan
 D_test(row_number,:) = user_row; % insert the user_row into a blank matrix and assign to test_D
 D_training = ratings_matrix; % the training dataset is the whole ratings matrix
 tic
-[~,pred_test] = matrix_factorisation_un_batch(D_training,D_test,step,rank_k,lambda,conv_crit); % Perform CF to predict the ratings of the unrated items
+[~,pred_test] = matrix_factorisation_un_svd(D_training,D_test,step,rank_k,lambda,conv_crit); % Perform CF to predict the ratings of the unrated items
 pred_user_row = D_training(row_number,:) + pred_test(row_number,:); % Combine with the '0s' ratings, i.e. the rated items 
 
-user_ranking = user_rank(pred_user_row); % Form user ranking 
+user_ranking = user_rank(pred_user_row) % Form user ranking 
 
 % Vendor Ranking
 
