@@ -3,7 +3,7 @@ clear all
 addpath('../../Generic Functions') 
 
 % Datasets:
-% Restaurant_Rec_ratings.txt
+% Restaurant_Rec_Ratings.txt
 % Movie_Lens_Ratings.txt
 % Yahoo_Music_Ratings.txt
 
