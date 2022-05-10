@@ -8,13 +8,13 @@ addpath('../../Generic Functions')
 % Yahoo_Music_Ratings.txt
 
 % Form the data matrix
-txt_file = '../../Datasets/Movie_Lens_Ratings.txt';
+txt_file = '../../Datasets/Yahoo_Music_Ratings.txt';
 D = readmatrix(txt_file);
 D = D(:,1:3);
 ratings_matrix = make_ratings_matrix(D, txt_file); % form the ratings matrix
 
 % Form a smaller test matrix
-test_matrix = make_test_matrix(ratings_matrix,1200,1200);
+test_matrix = make_test_matrix(ratings_matrix,500,500);
 ratings_matrix = test_matrix;
 
 % Inputs
@@ -24,21 +24,18 @@ split = 4; % number of cross-validation folds
 D_split = cross_validation_nn(ratings_matrix,split);
 error = cross_val_error(ratings_matrix,D_split,split); % check how many values have changed after cross-validation
 
-% for n = 1:split
-
 % Form the training/test datasets from the cross validation folds
 [D_training,D_test] = form_train_test(D_split,split);
 
-
 % Inputs
-step = 0.00021; % gradient descent step value 
-rank_k = 3; % directly input k
+step = 0.0001; % gradient descent step value 
+rank_k = 10; % directly input k
 conv_crit = 0.001; % convergence criterion
-lambda = 0; % regularisation term (to prevent overfitting)
+lambda = 0.25; % regularisation term (to prevent overfitting)
 
 % Carry our MF
 tic
-[rmse_mf,~] = matrix_factorisation_un_svd(D_training,D_test,step,rank_k,lambda,conv_crit)
+[rmse_mf,~,it_rmse] = matrix_factorisation_un_stochastic(D_training,D_test,step,rank_k,lambda,conv_crit)
 toc
 
 

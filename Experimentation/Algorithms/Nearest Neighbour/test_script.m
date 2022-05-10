@@ -25,22 +25,30 @@ k = 25; % Select the top k% similar rows/col
 D_split = cross_validation_nn(ratings_matrix,split);
 error = cross_val_error(ratings_matrix,D_split,split); % Check how many values have changed after cross-validation
 
-% for n = 1:split
-
 % Form the training/test datasets from the cross validation folds
 [D_training,D_test] = form_train_test(D_split,split);
 
 % Carry our nearest neighbour
 tic
-[rmse_nn,~] = nearest_neighbour(D_training,D_test,k)
+%[rmse_nn,~] = nearest_neighbour(D_training,D_test,k)
 toc
 
-% Store each value in a vector
-%rmse_nn_values = rmse_nn_values[:,rmse_nn]
 
-% end
+% ITERATION SCRIPT TO FIND THE BEST K
+store_k = [];
+n_k = 15;
 
-% mean(rmse_nn_values)
+while n_k < 51
+    
+    n_k
+    [rmse_nn,~] = nearest_neighbour(D_training,D_test,n_k);
+    store_k = [store_k ; n_k rmse_nn];
+    
+    n_k = n_k + 5;
+
+end
+
+plot(store_k(:,1),store_k(:,2));
 
 % Prevents orange errors from appearing in the workspace
 warning off

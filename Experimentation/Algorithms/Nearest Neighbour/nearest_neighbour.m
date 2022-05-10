@@ -59,8 +59,8 @@ for n = 1:nnz(D_test) % iterate through each nonzero value in D_test
         
     else
         
-        % pred_entry = 0; % if both user entry and item entry are false, pred_entry = 0
-        pred_entry = sum(D_training(row_pos,:))./nnz(D_training(row_pos,:));  % take an average of all the user entries 
+        pred_entry = 0; % if both user entry and item entry are false, pred_entry = 0
+        %pred_entry = sum(D_training(row_pos,:))./nnz(D_training(row_pos,:));  % take an average of all the user entries 
         D_test(row_pos,col_pos) = 0; % remove entry from D_test so that it doesn't affect the RMSE
         mutual_false_entries = mutual_false_entries + 1; % mutual false entries counter
         
