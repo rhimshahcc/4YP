@@ -19,3 +19,4 @@ ym = errorbar(x,y_ym,err_ym,'o');
 xlabel('Collaborative Filtering Algorithm') % x axis is the item no.
 ylabel('RMSE') % y axis is the frequency of the item no.
 legend('Restaurant Rec','Movie Lens','Yahoo Music')
+grid on

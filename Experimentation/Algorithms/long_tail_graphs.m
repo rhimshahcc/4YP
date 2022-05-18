@@ -55,8 +55,8 @@ ym_y_scaled = (long_tail(:,2).* 100)/long_tail(1,2);
 % SMOOTH
 
 plot(smooth(rr_x_scaled),smooth(rr_y_scaled),smooth(ml_x_scaled),smooth(ml_y_scaled),smooth(ym_x_scaled),smooth(ym_y_scaled))
-xlabel('Ranked item number by popularity (Scaled)') % x axis is the item no.
-ylabel('Frequency of each item (Scaled)') % y axis is the frequency of the item no.
-legend('Restaurant Rec','Movie Lens','Yahoo Music')
+xlabel('Ranked Item Number by Popularity (Scaled)') % x axis is the item no.
+ylabel('Frequency of Each Item (Scaled)') % y axis is the frequency of the item no.
+legend('Restaurant Rec Dataset','Movie Lens Dataset','Yahoo Music Dataset')
 
 

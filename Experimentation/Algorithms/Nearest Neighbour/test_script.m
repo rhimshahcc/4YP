@@ -36,9 +36,9 @@ toc
 
 % ITERATION SCRIPT TO FIND THE BEST K
 store_k = [];
-n_k = 15;
+n_k = 10;
 
-while n_k < 51
+while n_k < 16
     
     n_k
     [rmse_nn,~] = nearest_neighbour(D_training,D_test,n_k);
